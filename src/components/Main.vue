@@ -1,14 +1,10 @@
-<script setup>
-
-</script>
-
 <template>
     <div class="main-wrapper">
         <section class="header-section">
             <p>Sell your home without missing out on its future worth.</p>
             <span>We're putting more wealth back into the hands of homeowners.</span>
             <div class="haBtn">
-                <button class="fBtn">Get My Bonus Offer</button>
+                <button class="fBtn" @click="getStart" >Get started</button>
                 <button class="sBtn">How It Works</button>
             </div>
         </section>
@@ -46,6 +42,17 @@
 
     </div>
 </template>
+
+<script>
+export default {
+    methods: {
+        getStart(){
+            this.$router.push('/registration')
+        }
+    }
+}
+</script>
+
 
 <style lang="css">
 .ptext{
@@ -112,10 +119,12 @@
     height: 53px;
     border: none ;
     border-radius: 100px ;
+    font-size: 18px ;
 }
 .haBtn .fBtn{
-    background: rgba(120, 55, 243, 1);
+    background:  #985ACE;
     color: white;
+    font-size: 18px;
     width: 210px;
     height: 56px ;
     border:none;

@@ -1,12 +1,14 @@
-
-
 <template>
-  
+  <nav>
     <navigation></navigation>
+  </nav>
+  <main>
     <v-main></v-main>
+  </main>
+  <footer>
     <v-footer></v-footer>
-    <TheWelcome />
-  
+  </footer>
+<TheWelcome />
 </template>
 
 <script>
