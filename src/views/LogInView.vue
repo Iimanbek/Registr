@@ -132,7 +132,7 @@ export default{
 }
 .form-wrap{
     background: white;
-    height: 50%; 
+    height: 60%; 
     width: 30%;
     display: flex;
     flex-direction: column;

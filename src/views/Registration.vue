@@ -124,8 +124,8 @@ export default{
 }
 .form-wrap{
     background: white;
-    height: 60%; 
-    width: 30%;
+    height: 70%; 
+    width: 32%;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */

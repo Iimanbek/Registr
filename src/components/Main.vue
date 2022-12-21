@@ -100,7 +100,7 @@ export default {
 }
 .mmmmm{
     background: rgba(231, 223, 216, 1);
-    margin-top: 250px ;
+    margin-top: 120px ;
     padding-bottom: 100px;
 }
 .sSection{
