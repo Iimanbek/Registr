@@ -124,13 +124,16 @@ export default{
 }
 .form-wrap{
     background: white;
-    height: 60%; 
-    width: 30%;
+    height: 70%; 
+    width: 32%;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
     border-radius: 20px ;
+    -webkit-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
 }
 label{
     color: rgba(0, 0, 0, 0.567);
