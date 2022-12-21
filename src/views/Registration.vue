@@ -6,14 +6,14 @@
                 <h2>Registration</h2>
             </div>
             <div class="inp-wrap">
-                <label for="inp1">First Name</label>
-                <input id="inp1" placeholder="" type="text">
-                <label for="inp2">Last Name</label>
-                <input id="inp2" placeholder="" type="text">
-                <label for="inp3">E-mail</label>
-                <input id="inp3" placeholder="" type="text">
-                <label for="inp4">Password"</label>
-                <input id="inp4" placeholder="" type="password">
+                <label  for="inp1">First Name</label>
+                <input id="inp1"  v-model="hello" type="text" name="inp1" required>
+                <label  for="inp2">Last Name</label>
+                <input id="inp2"  v-model="hello" type="text">
+                <label  for="inp3">E-mail</label>
+                <input id="inp3"  v-model="hello" type="text">
+                <label  for="inp4">Password"</label>
+                <input id="inp4"  v-model="hello" type="password">
             </div>
             <div class="btn-wrap">
                 <button class="btn1" >Registration</button>
@@ -31,6 +31,8 @@
 <script>
 export default{
 
+    methods: {
+    }
 }
 </script>
 
