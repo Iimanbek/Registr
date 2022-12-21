@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
+import Notifications from '@kyvg/vue3-notification'
 import './assets/main.css'
 import BaseLayOut from './layouts/BaseLayOut.vue'
 
@@ -20,9 +20,12 @@ const vuetify = createVuetify({
   directives,
 })
 
+
+
 app.component('BaseLayout', BaseLayOut)
 
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
+app.use(Notifications)
 app.mount('#app')

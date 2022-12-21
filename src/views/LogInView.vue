@@ -12,13 +12,14 @@
                 <!-- <button @click="show1 = !show1">show</button>
                  -->
                  <div class="show">
-                     <input class="chinp" type="checkbox" checked="check">
+                     <input @change="show1 = !show1" class="chinp" type="checkbox" >
                     <label>Show password</label>
                  </div>
                 
             </div>
             <div class="btn-wrap">
-                <button class="btn1" @click="login" > LOG IN </button>
+                <!-- <button class="btn1" @click="login" :disabled="email.length<=3 || password.length <= 5"> LOG IN </button> -->
+                <v-btn class="btn1" @click="login" :loading="loading1" :disabled="email.length<=3 || password.length <= 5"> LOG IN </v-btn>
                 <a class="llink" href="#">Forget password ?</a>
                 <div class="exx">
                     <button class="btn2" > <img src="../assets/google-icon.svg" alt="logo of google "> Continue with google</button>
@@ -28,20 +29,24 @@
                 <router-link  class="okk" to="/registration">REGISTRATION</router-link>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
+
 export default{
     data(){
         return {
+            loading1: false, 
             show1 : false ,
             email: '',
-            password:''
+            password:'',
         }
     },
     methods:{
         async login() {
+            this.loading1 = true
             if (this.email.length && this.password.length) {
 
                 let options = {
@@ -58,14 +63,21 @@ export default{
                 const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_FIREBASE_API_KEY}`, options)    
                 const res = await response.json()
                 console.log(res);
-                // if (response.ok) {
-                //     console.log(response.json())
-                // }else{
-                //     console.log(response.json())
-                // }
+
+                if (response.ok) {
+                    this.$router.push({name: 'home'})
+                }else{
+                    console.log('hello world');
+                    console.log(this.$notify)
+                    this.$notify({
+                        title: res.error.message,
+                        type: 'error'
+                    });
+                }
             }
+            this.loading1 = false
             
-        }
+        },
     },
 }
 </script>
@@ -188,6 +200,9 @@ export default{
     /* justify-content: center; */
     align-items: center;
     border-radius: 20px ;
+    -webkit-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
 }
 label{
     color: rgba(0, 0, 0, 0.567);
