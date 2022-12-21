@@ -6,12 +6,19 @@
             </div>
             <div class="inp-wrap">
                 <label for="inp3">E-mail</label>
-                <input id="inp3" placeholder="" type="text">
-                <label for="inp4">Password"</label>
-                <input id="inp4" placeholder="" type="password">
+                <input id="inp3" placeholder="" type="text" v-model="email" >
+                <label for="inp4">Password</label>
+                <input id="inp4" placeholder="" v-model="password" :type="show1 ? 'text' : 'password'">
+                <!-- <button @click="show1 = !show1">show</button>
+                 -->
+                 <div class="show">
+                     <input class="chinp" type="checkbox" checked="check">
+                    <label>Show password</label>
+                 </div>
+                
             </div>
             <div class="btn-wrap">
-                <button class="btn1"> LOG IN </button>
+                <button class="btn1" @click="login" > LOG IN </button>
                 <a class="llink" href="#">Forget password ?</a>
                 <div class="exx">
                     <button class="btn2" > <img src="../assets/google-icon.svg" alt="logo of google "> Continue with google</button>
@@ -26,12 +33,54 @@
 
 <script>
 export default{
+    data(){
+        return {
+            show1 : false ,
+            email: '',
+            password:''
+        }
+    },
+    methods:{
+        async login() {
+            if (this.email.length && this.password.length) {
 
+                let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body:JSON.stringify({
+                    email: this.email ,
+                    password: this.password ,
+                    returnSecureToken: true 
+                })
+                }
+                const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_FIREBASE_API_KEY}`, options)    
+                const res = await response.json()
+                console.log(res);
+                // if (response.ok) {
+                //     console.log(response.json())
+                // }else{
+                //     console.log(response.json())
+                // }
+            }
+            
+        }
+    },
 }
 </script>
 
 
 <style scoped>
+.chinp{
+    position: relative;
+    bottom: -5px ;
+}
+.show{
+    display: flex;
+    align-items: center;
+    gap: 5px ;
+}
 .llink{
     text-decoration: none;
     width: 100%;
