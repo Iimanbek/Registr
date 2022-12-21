@@ -7,3 +7,23 @@ body{
     padding: 0;
     margin: 0;
   }
+
+
+  .my-custom-class{
+    z-index: 3;
+    
+  }
+  .notification-title{
+  }
+  .notification-content{
+  }
+  .my-custom-class .success{
+  }
+  .my-custom-class .info{
+  }
+  .my-custom-class.error{
+    background: red;
+    color: white;
+  }
+
+
