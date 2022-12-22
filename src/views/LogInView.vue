@@ -19,7 +19,7 @@
             </div>
             <div class="btn-wrap">
                 <!-- <button class="btn1" @click="login" :disabled="email.length<=3 || password.length <= 5"> LOG IN </button> -->
-                <v-btn class="btn1" @click="login" :loading="loading1" :disabled="email.length<=3 || password.length <= 5"> LOG IN </v-btn>
+                <v-btn class="btn1" @click="login" :loading="loading1" :disabled="email.length<=3 || password.length <= 5 || loading1"> LOG IN </v-btn>
                 <a class="llink" href="#">Forget password ?</a>
                 <div class="exx">
                     <button class="btn2" > <img src="../assets/google-icon.svg" alt="logo of google "> Continue with google</button>
