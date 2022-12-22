@@ -1,5 +1,4 @@
-<script>
-  
+<script>  
 </script>
 
 <template>
@@ -7,7 +6,6 @@
     <RouterView />
     <notifications position="bottom right" classes="my-custom-class"></notifications>
   </div>
-  
 </template>
 
 <style>
