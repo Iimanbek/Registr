@@ -5,15 +5,20 @@
             <div class="nammm">
                 <h2>Registration</h2>
             </div>
+            <form @submit.prevent="register">
             <div class="inp-wrap">
-                <label  for="inp1">First Name</label>
+                <!-- <label  for="inp1">First Name</label>
                 <input id="inp1"  v-model="hello" type="text" name="inp1" required>
                 <label  for="inp2">Last Name</label>
-                <input id="inp2"  v-model="hello" type="text">
+                <input id="inp2"  v-model="hello" type="text"> -->
                 <label  for="inp3">E-mail</label>
-                <input id="inp3"  v-model="hello" type="text">
+                <input id="inp3"  v-model="FormData.email" type="email" required>
                 <label  for="inp4">Password"</label>
-                <input id="inp4"  v-model="hello" type="password">
+                <input id="inp4"  required v-model="FormData.password" :type="show2 ? 'text' : 'password'" >
+            </div>
+            <div class="show">
+                <input @change="show2 = !show2" class="chinp" type="checkbox" >
+                <label>Show password</label>
             </div>
             <div class="btn-wrap">
                 <button class="btn1" >Registration</button>
@@ -24,19 +29,43 @@
             <div class="rout">
                 <router-link  class="okk" to="/login" >Log in </router-link>
             </div>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
 export default{
-
+    data() {
+        return{
+            show2 : false ,
+            FormData:{
+                password: '',
+                email: '',
+                error: '',
+            }
+        }
+    },
     methods: {
+        async register(){
+        const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[${import.meta.env.VITE_FIREBASE_API_KEY}]`
+        const OPTIONS = {
+            method: 'POST',
+            headers: {
+                'Content-Type'
+            }
+        }
+
+
+        }
     }
 }
 </script>
 
 <style scoped>
+form{
+    width: 100%;
+}
 .okk {
   position: relative;
 }
@@ -73,6 +102,7 @@ export default{
 .btn-wrap{
     width: 70%;
     border-bottom: 1px solid black ;
+    margin: 15px 0;
 }
 .btn2{
     display: flex;
@@ -124,11 +154,11 @@ export default{
 }
 .form-wrap{
     background: white;
-    height: 70%; 
-    width: 32%;
+    height: 55%; 
+    width: 30%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
     border-radius: 20px ;
     -webkit-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
