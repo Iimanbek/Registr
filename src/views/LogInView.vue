@@ -6,9 +6,9 @@
             </div>
             <div class="inp-wrap">
                 <label for="inp3">E-mail</label>
-                <input id="inp3" placeholder="" type="text" v-model="email" >
+                <input id="inp3" placeholder="" type="text" v-model="FormData.email" >
                 <label for="inp4">Password</label>
-                <input id="inp4" placeholder="" v-model="password" :type="show1 ? 'text' : 'password'">
+                <input id="inp4" placeholder="" v-model="FormData.password" :type="show1 ? 'text' : 'password'">
                 <!-- <button @click="show1 = !show1">show</button>
                  -->
                  <div class="show">
@@ -19,7 +19,7 @@
             </div>
             <div class="btn-wrap">
                 <!-- <button class="btn1" @click="login" :disabled="email.length<=3 || password.length <= 5"> LOG IN </button> -->
-                <v-btn class="btn1" @click="login" :loading="loading1" :disabled="email.length<=3 || password.length <= 5 || loading1"> LOG IN </v-btn>
+                <v-btn class="btn1" @click="login" :loading="loading1" :disabled="FormData.email.length<= 3 || FormData.password.length <= 5 || loading1"> LOG IN </v-btn>
                 <a class="llink" href="#">Forget password ?</a>
                 <div class="exx">
                     <button class="btn2" > <img src="../assets/google-icon.svg" alt="logo of google "> Continue with google</button>
@@ -40,35 +40,37 @@ export default{
         return {
             loading1: false, 
             show1 : false ,
-            email: '',
-            password:'',
+            FormData:{
+                email: '',
+                password:'',
+                returnSecureToken: true
+            },
+            errors:{
+                email: '',
+                password:'',
+            },
         }
     },
     methods:{
         async login() {
             this.loading1 = true
-            if (this.email.length && this.password.length) {
-
+            if (this.FormData.email.length && this.FormData.password.length) {  
                 let options = {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
                 },
-                body:JSON.stringify({
-                    email: this.email ,
-                    password: this.password ,
-                    returnSecureToken: true 
-                })
+                body:JSON.stringify(this.FormData)
                 }
                 const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_FIREBASE_API_KEY}`, options)    
                 const res = await response.json()
                 console.log(res);
-
                 if (response.ok) {
-                    this.$router.push({name: 'home'})
+                    localStorage.setItem('user', JSON.stringify(res))
+                    this.$router.push({path: '/private'})
                 }else{
-                    console.log('hello world');
-                    console.log(this.$notify)
+                    // console.log('hello world');
+                    // console.log(this.$notify)
                     this.$notify({
                         title: res.error.message,
                         type: 'error'
