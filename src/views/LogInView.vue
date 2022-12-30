@@ -55,7 +55,6 @@ export default{
         async login() {
             this.loading1 = true
             if (this.FormData.email.length && this.FormData.password.length) {  
-
                 let options = {
                 method: 'POST',
                 headers: {
@@ -66,7 +65,6 @@ export default{
                 const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_FIREBASE_API_KEY}`, options)    
                 const res = await response.json()
                 console.log(res);
-
                 if (response.ok) {
                     localStorage.setItem('user', JSON.stringify(res))
                     this.$router.push({path: '/private'})

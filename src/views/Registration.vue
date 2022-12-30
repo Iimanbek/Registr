@@ -5,19 +5,21 @@
             <div class="nammm">
                 <h2>Registration</h2>
             </div>
-            <form @submit.prevent="register">
+            <form class="double-wrap" @submit.prevent="register">
             <div class="inp-wrap">
                 <!-- <label  for="inp1">First Name</label>
                 <input id="inp1"  v-model="hello" type="text" name="inp1" required>
                 <label  for="inp2">Last Name</label>
                 <input id="inp2"  v-model="hello" type="text"> -->
                 <label  for="inp3">E-mail</label>
-                <input id="inp3"  v-model="FormData.email" type="email" required>
+                <input id="inp3"  v-model="formData.email" type="email" required>
+                <p v-if="errors.email.length" >{{ errors.email }}</p>
                 <label  for="inp4">Password"</label>
-                <input id="inp4"  required v-model="FormData.password" :type="show2 ? 'text' : 'password'" >
+                <input id="inp4"  required v-model="formData.password" :type="show2 ? 'text' : 'password'" >
+                <p v-if="errors.password.length" >{{ errors.password }}</p>
             </div>
             <div class="show">
-                <input @change="show2 = !show2" class="chinp" type="checkbox" >
+                <input @change="show2 = !show2" class="chinp" type="checkbox">
                 <label>Show password</label>
             </div>
             <div class="btn-wrap">
@@ -39,24 +41,50 @@ export default{
     data() {
         return{
             show2 : false ,
-            FormData:{
-                password: '',
+            formData: {
                 email: '',
-                error: '',
+                password: '',
+                returnSecureToken: true
+            },
+            errors: {
+                email: '',
+                password: ''
             }
         }
     },
     methods: {
         async register(){
-        const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[${import.meta.env.VITE_FIREBASE_API_KEY}]`
+        const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${import.meta.env.VITE_FIREBASE_API_KEY}`
         const OPTIONS = {
             method: 'POST',
             headers: {
-                'Content-Type'
-            }
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify(this.formData)
         }
-
-
+            const response = await fetch(URL, OPTIONS)
+            const data = await response.json()
+            if(response.ok) {
+                localStorage.setItem('user', data)
+                this.$router.push({name: 'home'})
+            }else {
+                switch (data.error.message) {
+                    case 'INVALID_EMAIL':
+                        this.errors.email = 'Неверный email'
+                        break
+                    case 'EMAIL_EXISTS':
+                        this.errors.email = 'Такой email уже есть'
+                        break
+                    case 'WEAK_PASSWORD : Password should be at least 6 characters':
+                        this.errors.password = 'Пароль должен превышать 6 символов'
+                        break
+                    default:
+                        this.$notify({
+                        title: data.error.message,
+                        type: 'error'
+                        });
+                }
+            }
         }
     }
 }
@@ -82,7 +110,12 @@ form{
   transform: scaleX(0);
   transition: transform 0.5s ease;
 }
-
+.double-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;
+}
 .okk:hover::before {
   transform-origin: bottom left;
   transform: scaleX(1);
@@ -160,6 +193,7 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     border-radius: 20px ;
     -webkit-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 29px -31px 87px 0px rgba(34, 60, 80, 0.2);
