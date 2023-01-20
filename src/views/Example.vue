@@ -12,7 +12,7 @@
             <div class="inner-main">
                 <h2>Hello world</h2>
                 <div class="p-wrap">
-                    <p v-for="n of 112">hello world</p>
+                    <p v-for="n of 144">hello world</p>
                 </div>
             </div>
         </main>
