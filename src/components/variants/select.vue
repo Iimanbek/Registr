@@ -29,15 +29,6 @@ export default {
         ],
     }),
     methods: {
-        // selectedddd(){
-        //     if (this.selected == 'Contacts') {
-        //         this.$router.push({path: '/contacts'})
-        //     }else if (this.selected == 'Deals'){
-        //         this.$router.push({path: '/deals'})
-        //     }else if (this.selected == 'Companies') {
-        //         this.$router.push({path: '/comapnies'})
-        //     }
-        // }
     },
     computed:{
 
@@ -46,7 +37,6 @@ export default {
     },
     watch:{
         selected(){
-            console.log(this.selected.state);
             if (this.selected.state == 'Contacts') {
                 this.$router.push({path: '/contacts'})
             }else if (this.selected.state == 'Deals'){
