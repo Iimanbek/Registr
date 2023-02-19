@@ -66,7 +66,7 @@ export default{
             const data = await response.json()
             if(response.ok) {
                 localStorage.setItem('user', data)
-                this.$router.push({name: 'home'})
+                this.$router.push({path: '/private'})
             }else {
                 switch (data.error.message) {
                     case 'INVALID_EMAIL':

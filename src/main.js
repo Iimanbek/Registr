@@ -6,6 +6,7 @@ import router from './router'
 import Notifications from '@kyvg/vue3-notification'
 import './assets/main.css'
 import BaseLayOut from './layouts/BaseLayOut.vue'
+import BaseSelect from './layouts/BaseSelectLayOut.vue'
 const app = createApp(App)
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -33,7 +34,7 @@ const vuetify = createVuetify({
 
 
 app.component('BaseLayout', BaseLayOut)
-
+app.component('BaseSelect', BaseSelect )
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)

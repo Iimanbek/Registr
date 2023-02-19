@@ -69,8 +69,6 @@ export default{
                     localStorage.setItem('user', JSON.stringify(res))
                     this.$router.push({path: '/private'})
                 }else{
-                    // console.log('hello world');
-                    // console.log(this.$notify)
                     this.$notify({
                         title: res.error.message,
                         type: 'error'

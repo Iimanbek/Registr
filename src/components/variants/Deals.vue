@@ -2,20 +2,23 @@
     <div class="main_wrapper">
         <BaseSelect/>
         <div>
-            private
-        </div>
+            deals
+        </div>        
     </div>
 </template>
 <script>
+
 export default {
-    
+    components:{
+
+    }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     
     .main_wrapper{
     background: #191919;
     height: 100vh ;
     color: white;
-    }
+}
 </style>

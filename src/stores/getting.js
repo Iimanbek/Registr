@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 
 
-export const usegettingStore = defineStore('getting', {
+export const usevariantStore = defineStore('variants', {
+    state: () => ({
+        variantValue:''
+    })
 })

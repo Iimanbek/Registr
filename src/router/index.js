@@ -35,6 +35,24 @@ const router = createRouter({
       name: 'Private',
       component: () => import('../views/Private.vue'),
       redirect: user ? '' : '/login'
+    },
+    {
+      path: '/comapnies',
+      name: 'Companies',
+      component: () => import('../components/variants/Company.vue'),
+      redirect: user ? '' : '/login'
+    },
+    {
+      path: '/deals',
+      name: 'Deals',
+      component: () => import('../components/variants/Deals.vue'),
+      redirect: user ? '' : '/login'
+    },
+    {
+      path: '/contacts',
+      name: 'Contacts',
+      component: () => import('../components/variants/Contacts.vue'),
+      redirect: user ? '' : '/login'
     }
   ]
 })
