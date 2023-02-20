@@ -24,7 +24,9 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig)
 
-
+// import * as Vue from 'vue' // in Vue 3
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 const vuetify = createVuetify({
   components,
@@ -36,6 +38,7 @@ const vuetify = createVuetify({
 app.component('BaseLayout', BaseLayOut)
 app.component('BaseSelect', BaseSelect )
 app.use(createPinia())
+app.use(VueAxios, axios)
 app.use(router)
 app.use(vuetify)
 app.use(Notifications)

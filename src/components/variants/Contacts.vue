@@ -3,16 +3,17 @@
         <BaseSelect/>
         <div>
             <v-btn @click="overlay = !overlay" class="fixed_btn">Create new company</v-btn>
-            <div v-for="item in data" class="item_wrapper container">
+            <div v-if="this.data" class="item_wrapper container">
                 <div class="inner_item">
                     <v-list
                         class="lists"
-                        :items="items"
+                        :items="this.data"
                         item-props
                         lines="three"
                         >
                         <template v-slot:subtitle="{ subtitle }">
-                        <div v-html="subtitle"></div>
+                        <div class="html_inner" v-html="subtitle">
+                        </div>
                         </template>
                     </v-list>
                 </div>
@@ -24,20 +25,20 @@
                 class="align-center justify-center">
                    <div class="modal-inner">
                     <v-text-field
-                    label="Name of Company"
+                    label="Theme"
                     :rules="rules"
                     hide-details="auto"
-                    v-model="formData.nameOfCC"
+                    v-model="formData.title"
                     ></v-text-field>
                     <v-text-field 
-                    v-model="formData.Option"
-                    label="Options of company"></v-text-field>
+                    v-model="formData.name"
+                    label="Name"></v-text-field>
                     <v-text-field 
-                    v-model="formData.creater"
-                    label="Created by:"></v-text-field>
+                    v-model="formData.prependAvatar"
+                    label="Photo of contact"></v-text-field>
                     <v-text-field 
-                    v-model="formData.links"
-                    label="Link to image"></v-text-field>
+                    v-model="formData.speech"
+                    label="Description of person"></v-text-field>
                     <v-btn @click="sendData" :loading="loading1">Create</v-btn>
                    </div>
                 </v-overlay>
@@ -46,41 +47,10 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default{
     data() {
         return {
-        items: [
-        { type: 'subheader', title: 'Today' },
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
-          subtitle: `<span class="text-primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Summer BBQ',
-          subtitle: `<span class="text-primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Oui oui',
-          subtitle: '<span class="text-primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Birthday gift',
-          subtitle: '<span class="text-primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          title: 'Recipe to try',
-          subtitle: '<span class="text-primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        },
-        ],
             data:null,
             overlay: false,
             rules: [
@@ -88,6 +58,13 @@ export default{
                 value => (value && value.length >= 3) || 'Min 3 characters',
             ],
             loading1: false, 
+            formData:{
+                title: '',
+                prependAvatar: '',
+                name:'',
+                speech:'',
+            },
+            errors:[]
         }
     },
     methods: {
@@ -96,6 +73,45 @@ export default{
             const res = await fetch(url)
             this.data = await res.json()
         },
+        async sendData(){
+            this.loading1 = true
+            // let options = {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type' : 'application/json'
+            //     },
+            //     body:JSON.stringify({
+            //         prependAvatar: this.formData?.prependAvatar,
+            //         title: this.formData?.title,
+            //         subtitle: `<span>${this.formData?.name}</span> - ${this.formData?.speech}`,
+            //     })
+            // }
+            // const URL = 'http://localhost:3000/Contacts' 
+            // const response = await fetch(URL, options)
+            // if (response?.ok) {
+            //     this.getData()
+            //     console.log('works');
+            // }else{
+            //     console.log('something wrong with request');
+            // }
+            // const newData = await response.json();
+            //---------------belo version works but i keep doing with axios---------------//
+            // --------------GETTING 500 ERROR-----------------//
+            if (this.formData.name && this.formData.title && this.formData.prependAvatar) {
+                axios.post(`http://localhost:3000/Contacts`,{
+                prependAvatar: this.formData?.prependAvatar,
+                title: this.formData?.title,
+                subtitle: `<span>${this.formData?.name}</span> - ${this.formData?.speech}`,
+                })
+                .then(res => {
+                    this.getData()
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })     
+            }
+            this.loading1 = false
+        }
     },
     mounted() {
         this.getData()
@@ -117,5 +133,16 @@ export default{
     right: 0;
     bottom: 0 ;
     margin: 0 0 100px 0;
+}
+.modal-wrapper{
+    width: 60%;
+}
+.modal-inner{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    background: black;
+    border-radius: 5px;
+    height: 400px;
 }
 </style>
